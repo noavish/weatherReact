@@ -5,12 +5,11 @@ class CommentsListBox extends React.Component {
 
     createComments() {
         return this.props.comments.map((comment, index)=>{
-            return <CommentBox key={index} commentIndex={index} cityIndex={this.props.cityIndex} {...comment}/>
+            return <CommentBox key={index} commentIndex={index} cityIndex={this.props.cityIndex} {...comment} deleteComment={this.props.deleteComment}/>
         });
     }
 
     render(){
-        console.log(this)
         return(
             <ul>
                 {this.createComments()}

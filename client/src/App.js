@@ -9,6 +9,8 @@ class App extends Component {
         this.state = {cities: []};
         this.updateCities = this.updateCities.bind(this);
         this.updateComments = this.updateComments.bind(this);
+        this.deleteCity = this.deleteCity.bind(this);
+        this.deleteComment = this.deleteComment.bind(this);
 
     }
 
@@ -21,13 +23,30 @@ class App extends Component {
     }
 
     updateComments(comment, cityIndexToUpdate) {
-        this.setState((prevState, props) => {
-            let updatedComments = prevState.cities[cityIndexToUpdate].comments.concat(comment);
-            let updatedCity = {...prevState.cities[cityIndexToUpdate]};
-            updatedCity.comments = updatedComments;
-            return {cities:[...prevState.cities.filter((value, i)=> i !== cityIndexToUpdate), updatedCity]}
-        },
-            ()=> console.log(this.state.cities[cityIndexToUpdate].comments));
+        this.setState(prevState => {
+            return {cities: prevState.cities.map((city, i)=>{
+                if (i == cityIndexToUpdate){
+                    let updatedComments = city.comments.concat(comment);
+                    let updatedCity = {...city};
+                    updatedCity.comments = updatedComments;
+                    return updatedCity;
+                }
+                return  city;
+                })
+            };
+        });
+    }
+
+    deleteCity(cityIndex){
+        this.state.cities.splice(cityIndex, 1);
+        this.setState({cities: this.state.cities});
+    }
+
+    deleteComment(cityIndex, commentIndex){
+        console.log(cityIndex, commentIndex)
+        this.state.cities[cityIndex].comments.splice(commentIndex, 1);
+        console.log(this.state);
+        this.setState({cities: this.state.cities});
     }
 
     render() {
@@ -38,7 +57,7 @@ class App extends Component {
                   <SearchForm updateCities={this.updateCities}/>
                 </div>
                 <div className='list row'>
-                  <WeatherListBox cities={this.state.cities} updateComments={this.updateComments}/>
+                  <WeatherListBox cities={this.state.cities} updateComments={this.updateComments} deleteCity={this.deleteCity} deleteComment={this.deleteComment}/>
                 </div>
             </div>
         );

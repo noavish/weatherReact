@@ -9,15 +9,24 @@ function IconImage(icon){
 }
 
 class WeatherBox extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {cityIndex: this.props.cityIndex};
+        this.onClickDeleteCity = this.onClickDeleteCity.bind(this);
+    }
+
+    onClickDeleteCity(){
+        this.props.deleteCity(this.state.cityIndex);
+    }
 
     render(){
         return(
             <li className='city-box' data-id={this.props.index}>
                 <div> {IconImage(this.props.icon)} </div>
-                <h4> {this.props.name} </h4>
+                <h4> {this.props.name} <span><button type='button' onClick={this.onClickDeleteCity}>Delete</button></span></h4>
                 <p> {this.props.description} - {this.props.temp} | {this.props.unit} </p>
-                <CommentForm index={this.props.cityIndex} updateComments={this.props.updateComments}/>
-                <CommentsListBox comments={this.props.comments}/>
+                <CommentForm cityIndex={this.props.cityIndex} updateComments={this.props.updateComments}/>
+                <CommentsListBox comments={this.props.comments} cityIndex={this.props.cityIndex} deleteComment={this.props.deleteComment}/>
             </li>
         );
     }

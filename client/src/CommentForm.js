@@ -16,7 +16,7 @@ class CommentForm extends React.Component{
             user: this.state.user,
             comment: this.state.comment
         };
-        this.props.updateComments(comment, this.props.index);
+        this.props.updateComments(comment, this.props.cityIndex);
     }
 
     render(){
