@@ -4,12 +4,13 @@ import CommentBox from './CommentBox';
 class CommentsListBox extends React.Component {
 
     createComments() {
-        return this.props.cities[this.props.cities[this.props.cityIndex]].comments.map((comment, index)=>{
-            <CommentBox key={index} commentIndex={index} cityIndex={this.props.cityIndex} {...comment}/>
+        return this.props.comments.map((comment, index)=>{
+            return <CommentBox key={index} commentIndex={index} cityIndex={this.props.cityIndex} {...comment}/>
         });
     }
 
     render(){
+        console.log(this)
         return(
             <ul>
                 {this.createComments()}
