@@ -8,7 +8,6 @@ class FormButton extends React.Component{
 
     onClick(){
         console.log(this.props.city);
-        this.state.searchCity(this.state);
     }
 
     render(){

@@ -1,11 +1,22 @@
 import React, { Component } from 'react';
+import WeatherBox from './WeatherBox.js';
+
 
 class WeatherListBox extends React.Component{
+    constructor(props){
+        super(props);
+    }
+
+    createBoxes() {
+        return this.props.cities.map((city, index) =>
+            <WeatherBox key={index} cityIndex={index} {...city} cities={this.props.cities} updateComments={this.props.updateComments}/>);
+    }
+
     render(){
         return(
-            <div>
-                WeatherListBox
-            </div>
+            <ul>
+                {this.createBoxes()}
+            </ul>
         );
     }
 }
