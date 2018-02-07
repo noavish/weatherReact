@@ -14,7 +14,7 @@ class CommentBox extends React.Component {
 
     render(){
         return(
-            <li>Written by: {this.props.user} - {this.props.comment} <span> <button type='button' onClick={this.onClickDeleteComment}>Delete</button> </span></li>
+            <li className='comment-li'>Written by: {this.props.user} - {this.props.comment} <span> <button type='button' className="btn deletebtn deleteComment" onClick={this.onClickDeleteComment}><i class="fa fa-trash"></i></button> </span></li>
         );
     }
 }

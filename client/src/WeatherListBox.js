@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import WeatherBox from './WeatherBox.js';
 
-
 class WeatherListBox extends React.Component{
     constructor(props){
         super(props);
@@ -14,7 +13,7 @@ class WeatherListBox extends React.Component{
 
     render(){
         return(
-            <ul>
+            <ul className='cities-list'>
                 {this.createBoxes()}
             </ul>
         );
