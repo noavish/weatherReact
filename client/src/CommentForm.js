@@ -11,12 +11,14 @@ class CommentForm extends React.Component{
         this.setState({[e.target.id]: e.target.value});
     }
 
-    onClick(){
+    onClick(e){
+        e.preventDefault();
         var comment = {
             user: this.state.user,
             comment: this.state.comment
         };
         this.props.updateComments(comment, this.props.cityID);
+        this.setState({user: '', comment: ''});
     }
 
     render(){
@@ -26,7 +28,7 @@ class CommentForm extends React.Component{
                     <div><input type="text" className="form-control comment-input" id="user" placeholder="Visitor" required value={this.state.user} onChange={this.onChange}/></div>
                     <div><input type="text" className="form-control comment-input" id="comment" placeholder="Enter Comment" required value={this.state.comment} onChange={this.onChange}/></div>
                     <span className="input-group-btn">
-                        <button type="button" className="btn btn-primary post-comment" onClick={this.onClick}>Submit</button>
+                        <button type="submit" className="btn btn-primary post-comment" onClick={this.onClick}>Submit</button>
                     </span>
                 </div>
             </form>

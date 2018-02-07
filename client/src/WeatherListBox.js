@@ -8,7 +8,7 @@ class WeatherListBox extends React.Component{
 
     createBoxes() {
         return this.props.cities.map((city, index) =>
-            <WeatherBox key={index} cityIndex={index} {...city} updateComments={this.props.updateComments} deleteCity={this.props.deleteCity} deleteComment={this.props.deleteComment}/>);
+            <WeatherBox key={city._id} cityIndex={city._id} {...city} updateComments={this.props.updateComments} deleteCity={this.props.deleteCity} deleteComment={this.props.deleteComment}/>);
     }
 
     render(){

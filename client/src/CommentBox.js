@@ -8,13 +8,12 @@ class CommentBox extends React.Component {
     }
 
     onClickDeleteComment(){
-        console.log(this.props.cityIndex, this.state.commentIndex)
-        this.props.deleteComment(this.props.cityIndex, this.state.commentIndex);
+        this.props.deleteComment(this.props.cityIndex, this.props._id);
     }
 
     render(){
         return(
-            <li className='comment-li'>Written by: {this.props.user} - {this.props.comment} <span> <button type='button' className="btn deletebtn deleteComment" onClick={this.onClickDeleteComment}><i class="fa fa-trash"></i></button> </span></li>
+            <li className='comment-li'>Written by: {this.props.user} - {this.props.comment} <span> <button type='button' className="btn deletebtn deleteComment" onClick={this.onClickDeleteComment}><i className="fa fa-trash"></i></button> </span></li>
         );
     }
 }

@@ -38,75 +38,63 @@ class App extends Component {
     }
 
     updateComments(comment, cityID) {
-        // put request!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         axios({
             method: 'PUT',
             url: `/updateComments/${cityID}`,
-            data: comment
+            data: {comment}
         })
-            .then(response => {
-                console.log('hi')
-                console.log(response)
-                // this.setState((prevState) => { return { cities: prevState.cities.filter((item) => { return (item._id !== cityID) }) } });
-                // console.log(this.state)
-            })
-            .catch(error => {
-                console.log('Error fetching and parsing data', error);
+        .then(response => {
+            console.log(response.data.comments);
+            this.setState(prevState => {
+                return {cities: prevState.cities.map((city, i)=>{
+                        if (city._id == cityID){
+                            let updatedCity = {...city};
+                            updatedCity.comments = response.data.comments;
+                            return updatedCity;
+                        }
+                        return  city;
+                    })
+                };
             });
-
-        // this.setState(prevState => {
-        //     return {cities: prevState.cities.map((city, i)=>{
-        //         if (i == cityIndexToUpdate){
-        //             let updatedComments = city.comments.concat(comment);
-        //             let updatedCity = {...city};
-        //             updatedCity.comments = updatedComments;
-        //             return updatedCity;
-        //         }
-        //         return  city;
-        //         })
-        //     };
-        // });
+        })
+        .catch(error => {
+            console.log('Error fetching and parsing data', error);
+        });
     }
 
     deleteCity(cityID){
-
         var url = `/${cityID}`;
         axios.delete(url)
             .then(response => {
-                console.log(response)
-                // this.setState((prevState) => {
-                //     return {
-                //         cities: prevState.cities.filter((item) => {
-                //             return (item._id !== cityID)
-                //         })
-                //     }
-                // }, () => {
-                //     console.log(this.state)
-                // });
-
+                console.log(response);
                 this.setState(prevState => ({
-                    cities: prevState.cities.filter((item) => item._id !== cityID)
+                    cities: prevState.cities.filter((item) => {
+                       return item._id !== cityID
+                    })
                 }),()=>{
                     console.log(this.state)
                 });
 
             });
-
-        //         this.setState((prevState) => { return { cities: prevState.cities.filter((item) => { return (item._id !== cityID) }) } },()=>{
-        //             console.log(this.state)
-        //         });
-        //
-        //     })
-        //     .catch(error => {
-        //         console.log('Error fetching and parsing data', error);
-        //     });
     }
 
-    deleteComment(cityIndex, commentIndex){
-        console.log(cityIndex, commentIndex)
-        this.state.cities[cityIndex].comments.splice(commentIndex, 1);
-        console.log(this.state);
-        this.setState({cities: this.state.cities});
+    deleteComment(cityID, commentID){
+        var url = `/${cityID}/deleteComment/${commentID}`;
+        axios.delete(url)
+            .then(response => {
+                console.log(response.data.comments);
+                this.setState(prevState => {
+                    return {cities: prevState.cities.map((city, i)=>{
+                            if (city._id == cityID){
+                                let updatedCity = {...city};
+                                updatedCity.comments = response.data.comments;
+                                return updatedCity;
+                            }
+                            return  city;
+                        })
+                    };
+                });
+            })
     }
 
     addCityToDB(cityName){
@@ -139,10 +127,10 @@ class App extends Component {
         return (
             <div className="App container">
                 <div className='header row'>
-                    <div className='col-10'>
-                        <h1> Weather </h1>
+                    <div className='col-12'>
+                        <h2> Weather </h2>
                     </div>
-                    <div className='col-10'>
+                    <div className='col-12'>
                         <SearchForm addCityToDB={this.addCityToDB}/>
                     </div>
                 </div>

@@ -44,12 +44,11 @@ class WeatherBox extends React.Component{
     };
 
     onClickDeleteCity(){
-        this.props.deleteCity(this.props._id);
+        this.props.deleteCity(this.props.cityIndex);
     }
 
 
     render(){
-        console.log(this.props)
         return(
             <li className='col-4 city-list-item' data-id={this.props.index}>
                 <div className='city-box'>

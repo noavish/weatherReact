@@ -14,7 +14,8 @@ class SearchForm extends React.Component{
         this.setState({city: e.target.value});
     }
 
-    onClick(){
+    onClick(e){
+        e.preventDefault();
         var url = `http://api.apixu.com/v1/current.json?key=6c5bd37454274dc381a152907180502&q=${this.state.city}`
         axios.get(url).then((response)=>{
             var cityName = response.data.location.name;
@@ -23,6 +24,7 @@ class SearchForm extends React.Component{
         .catch(error => {
             console.log('Error fetching and parsing data', error);
         });
+        this.setState({city: ''});
     }
 
 
@@ -39,7 +41,7 @@ class SearchForm extends React.Component{
                         value={this.state.city}
                         onChange={this.onChange}/>
                     <span className="input-group-btn">
-                        <button type="button" className="btn btn-primary get-temp" onClick={this.onClick}>Get Temp</button>
+                        <button type="submit" className="btn btn-primary get-temp" onClick={this.onClick}>Get Temp</button>
                     </span>
                 </div>
             </form>

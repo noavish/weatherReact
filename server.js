@@ -44,7 +44,7 @@ app.delete('/:cityID', function(req, res) {
     if (req.params.cityID) {
         City.findByIdAndRemove(req.params.cityID, function (err) {
             if (err) console.error(err);
-            console.log('post was deleted');
+            console.log('city was deleted');
         });
         res.send({status: "ok", message: "Deleted."});
     } else {
@@ -53,20 +53,41 @@ app.delete('/:cityID', function(req, res) {
 });
 
 app.put('/updateComments/:cityID', function(req, res) {
+      City.findById(req.params.cityID, function (err, city) {
+        if (err) {
+            console.error(err);
+        }
+        city.comments.push(req.body.comment);
+        city.save(function (err, data) {
+            if (err) throw err;
+            res.send(data);
+        });
+    });
+});
+
+app.delete('/:cityID/deleteComment/:commentID', function(req, res) {
     if (req.params.cityID) {
+        console.log(req.params.cityID, req.params.commentID);
         City.findById(req.params.cityID, function (err, city) {
             if (err) console.error(err);
-            city.comments.push(req.body.comment);
-            console.log(city)
-            city.save(function (err, city) {
-                console.log(city)
-                res.send(city);
-            });
+            city.comments.pull(req.params.commentID);
+            city.save(function (err, data) {
+                if (err) console.error(err);
+                res.send(data);
+                console.log(data);
+            })
         });
-        res.send({status: "ok", message: "Deleted."});
-    } else {
-        res.send({ status: "nok", message: "Nothing received." });
+        // City[req.params.cityID].children.id(_id).remove();
+
     }
+        // City.findByIdAndRemove(req.params.cityID, function (err) {
+    //         if (err) console.error(err);
+    //         console.log('city was deleted');
+    //     });
+    //     res.send({status: "ok", message: "Deleted."});
+    // } else {
+    //     res.send({ status: "nok", message: "Nothing received." });
+    // }
 });
 
 app.listen(3001, function () {
